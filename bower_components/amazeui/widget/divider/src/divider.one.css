@@ -1,0 +1,10 @@
+/**
+  * Divider Theme: one
+  */
+.am-divider-one {
+  height: 10px;
+  border: none;
+  overflow: hidden;
+  clear: both;
+  margin: 0;
+}

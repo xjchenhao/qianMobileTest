@@ -1,0 +1,10 @@
+.am-gallery {
+  padding: 5px 5px 0 5px;
+  list-style: none;
+}
+.am-gallery h3 {
+  margin: 0;
+}
+[data-am-gallery*='pureview'] img {
+  cursor: pointer;
+}

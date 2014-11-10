@@ -1,0 +1,14 @@
+.am-titlebar {
+  margin-top: 20px;
+  height: 45px;
+  font-size: 100%;
+}
+.am-titlebar h2 {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 1.6rem;
+}
+.am-titlebar .am-titlebar-title img {
+  height: 24px;
+  width: auto;
+}

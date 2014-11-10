@@ -1,0 +1,224 @@
+// Name:                      Comment
+//
+// Description:               Define style for comment
+//
+// Component:                 `.am-comment`
+//
+// Sub-objects:               `.am-comment-avatar`
+//                            `.am-comment-main`
+//                            `.am-comment-hd`
+//                            `.am-comment-title`
+//                            `.am-comment-meta`
+//                            `.am-comment-author`
+//                            `.am-comment-bd`
+//
+// Modifiers:                 `.am-comment-flip`
+//                            `.am-comment-primary`
+//                            `.am-comment-secondary`
+//                            `.am-comment-success`
+//                            `.am-comment-warning`
+//                            `.am-comment-danger`
+//
+// =============================================================================
+
+
+/* ==========================================================================
+   Component: Comment
+ ============================================================================ */
+
+.am-comment {
+  .clearfix();
+
+  .hook-comment();
+}
+
+.am-comment-avatar {
+  float: left;
+  width: @comment-avatar-size;
+  height: @comment-avatar-size;
+  border-radius: 50%;
+  border: 1px solid transparent;
+}
+
+.am-comment-main {
+  position: relative;
+  margin-left: @comment-avatar-size + @comment-avatar-margin;
+  border: 1px solid @comment-border-color;
+  border-radius: @global-border-radius;
+
+  &:before,
+  &:after {
+    position: absolute;
+    top: 11px;
+    left: -8px;
+    right: 100%;
+    width: 0;
+    height: 0;
+    display: block;
+    content: " ";
+    border-color: transparent;
+    border-style: solid solid dotted;
+    border-width: 8px 8px 8px 0;
+    pointer-events: none;
+  }
+
+  &:before {
+    border-right-color: @comment-border-color;
+    z-index: 1;
+  }
+
+  &:after {
+    border-right-color: @comment-hd-bg-color;
+    margin-left: 1px;
+    z-index: 2;
+  }
+}
+
+.am-comment-hd {
+  padding: 10px 15px;
+  background: @comment-hd-bg-color;
+  border-bottom: 1px solid #eee;
+}
+
+.am-comment-title {
+  margin: 0 0 @comment-title-margin-btm 0;
+  font-size: @comment-title-font-size;
+  line-height: @comment-title-line-height;
+}
+
+.am-comment-meta {
+  font-size: @comment-meta-font-size;
+  color: @comment-meta-color;
+  line-height: @comment-meta-line-height;
+
+  a {
+    color: @comment-meta-color;
+  }
+}
+
+.am-comment-author {
+  font-weight: bold;
+  color: @comment-meta-color;
+}
+
+.am-comment-bd {
+  padding: @comment-bd-padding;
+  overflow: hidden;
+  & > :last-child {
+    margin-bottom: 0;
+  }
+}
+
+
+// Modifiers
+// ========================================================================
+
+.am-comment-flip {
+  .am-comment-avatar {
+    float: right;
+  }
+
+  .am-comment-main {
+    margin-left: auto;
+    margin-right: @comment-avatar-size + @comment-avatar-margin;
+
+    &:before,
+    &:after {
+      left: auto;
+      right: -8px;
+      border-width: 8px 0 8px 8px;
+    }
+
+    &:before {
+      border-left-color: @comment-border-color;
+    }
+
+    &:after {
+      border-left-color: @comment-hd-bg-color;
+      margin-right: 1px;
+      margin-left: auto;
+    }
+  }
+}
+
+
+// Highlight mixin
+// =============================================================================
+
+.comment-highlight-variant(@border-color: @global-primary) {
+  .am-comment-avatar {
+    border-color: @border-color;
+  }
+
+  .am-comment-main {
+    border-color: @border-color;
+    &:before {
+      border-right-color: @border-color;
+    }
+  }
+
+  // Highlight and flip
+  &.am-comment-flip .am-comment-main {
+    &:before {
+      border-left-color: @border-color;
+      border-right-color: transparent;
+    }
+
+    &:after {
+      border-left-color: @comment-hd-bg-color;
+    }
+  }
+}
+
+.am-comment-primary {
+  .comment-highlight-variant(@global-primary);
+}
+
+.am-comment-secondary,
+.am-comment-highlight {
+  .comment-highlight-variant(@comment-hl-border-color);
+}
+
+.am-comment-success {
+  .comment-highlight-variant(@global-success);
+}
+
+.am-comment-warning {
+  .comment-highlight-variant(@global-warning);
+}
+
+.am-comment-danger {
+  .comment-highlight-variant(@global-danger);
+}
+
+
+// Comments list
+// =============================================================================
+
+.am-comments-list {
+  padding: 0;
+  list-style: none;
+}
+
+.am-comments-list .am-comment {
+  margin: @comment-list-margin-top 0 0 0;
+  list-style: none;
+}
+
+
+@media @medium-up {
+  .am-comments-list-flip {
+    .am-comment-main {
+      margin-right: 64px;
+    }
+    .am-comment-flip .am-comment-main {
+      margin-left: 64px;
+    }
+  }
+}
+
+
+// Hooks
+// =============================================================================
+
+.hook-comment() {}

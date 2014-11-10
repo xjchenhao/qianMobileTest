@@ -1,0 +1,11 @@
+/**
+  * Divider Theme: default
+  */
+.am-divider-default {
+  height: 1px;
+  border: none;
+  margin: 1.5rem auto;
+  overflow: hidden;
+  background-color: #dddddd;
+  clear: both;
+}

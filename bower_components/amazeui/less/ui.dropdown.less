@@ -1,0 +1,242 @@
+// Name:            Dropdown
+//
+// Description:     Define style for dropdown
+//
+// Component:       `.am-dropdown`
+//
+// Sub-objects:     `.am-dropdown-toggle`
+//                  `.am-dropdown-content`
+//                  `.am-dropdown-header`
+//
+// Modifiers:       `.am-dropdown-flip`
+//                  `.am-dropdown-center`
+//                  `.am-dropdown-justify`
+//                  `.am-dropdown-up`
+//                  `.am-dropdown-stack`
+//                  `.am-dropdown-navbar`
+//
+// States:          `.am-active`
+//                  `.am-disabled`
+//
+// Uses:             Animation
+//
+// =============================================================================
+
+
+// Variables
+// =============================================================================
+
+@dropdown-bg:                    #fff;
+@dropdown-border-color:          #ddd;
+@dropdown-divider-bg:            #e5e5e5;
+
+@dropdown-link-color:            @gray-dark;
+@dropdown-link-hover-color:      darken(@gray-dark, 5%);
+@dropdown-link-hover-bg:         #f5f5f5;
+@dropdown-link-active-color:     @component-active-color;
+@dropdown-link-active-bg:        @component-active-bg;
+@dropdown-link-disabled-color:   @gray-light;
+
+@dropdown-header-color:          @gray-light;
+@dropdown-caret-color:           darken(@dropdown-border-color, 5%);
+
+@caret-width-base:               6px;
+@dropdown-animation:             am-slide-top-fixed;
+
+
+// Dropdown mixin
+// =============================================================================
+// Dividers (basically an hr) within dropdowns and nav lists
+.nav-divider(@color: #e5e5e5) {
+  height: 1px;
+  margin: ((@line-height-computed / 2) - 1) 0;
+  overflow: hidden;
+  background-color: @color;
+}
+
+
+.am-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.am-dropdown-toggle:focus {
+  outline: 0;
+}
+
+.am-dropdown-content {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: @z-index-dropdown;
+  display: none;
+  float: left;
+  min-width: 160px;
+  padding: 15px;
+  margin: 9px 0 0;
+  text-align: left;
+  background-color: @dropdown-bg;
+  border: 1px solid @dropdown-border-color;
+  border-radius: @global-border-radius;
+  background-clip: padding-box;
+  -webkit-animation-duration: .15s;
+  animation-duration: .15s;
+
+  .angle-base;
+  .angle-up-variant(@dropdown-border-color, @dropdown-bg, 8px);
+
+  &:before,
+  &:after {
+    left: 10px;
+    top: -8px;
+    pointer-events: pointer-events;
+  }
+
+  &:after {
+    top: -7px;
+  }
+
+  .am-active > & {
+    display: block;
+    // .animation(@dropdown-animation 0.3s ease-in-out);
+  }
+
+  :first-child {
+    margin-top: 0;
+  }
+}
+
+
+// Dropdown Up
+// =============================================================================
+
+.am-dropdown-up .am-dropdown-content {
+  top: auto;
+  bottom: 100%;
+  margin: 0 0 9px;
+
+  &:before,
+  &:after {
+    border-bottom: none;
+    border-top: 8px solid @dropdown-border-color;
+    top: auto;
+    bottom: -8px;
+  }
+
+  &:after {
+    bottom: -7px;
+    border-top-color: @dropdown-bg;
+  }
+}
+
+.am-dropdown-flip .am-dropdown-content {
+  left: auto;
+  right: 0;
+
+  &:before,
+  &:after {
+    left: auto;
+    right: 10px;
+  }
+}
+
+
+// dropdown menu (ul)
+// =============================================================================
+
+ul.am-dropdown-content {
+  list-style: none;
+  padding: 5px 0;
+
+  list-style: none;
+
+  // Aligns the dropdown menu to right
+  &.am-fr {
+    right: 0;
+    left: auto;
+  }
+
+  // Dividers (basically an hr) within the dropdown
+  .am-divider {
+    .nav-divider(@dropdown-divider-bg);
+  }
+
+  // Links within the dropdown menu
+  > li > a {
+    display: block;
+    padding: 6px 20px;
+    clear: both;
+    font-weight: normal;
+    color: @dropdown-link-color;
+    white-space: nowrap;
+
+    &:hover,
+    &:focus {
+      text-decoration: none;
+      color: @dropdown-link-hover-color;
+      background-color: @dropdown-link-hover-bg;
+    }
+  }
+
+  // Active state
+  > .am-active > a {
+    &,
+    &:hover,
+    &:focus {
+      color: @dropdown-link-active-color;
+      text-decoration: none;
+      outline: 0;
+      background-color: @dropdown-link-active-bg;
+    }
+  }
+
+  // Disabled state
+  > .am-disabled > a {
+    &,
+    &:hover,
+    &:focus {
+      color: @dropdown-link-disabled-color;
+    }
+  }
+
+  > .am-disabled > a {
+    &:hover,
+    &:focus {
+      text-decoration: none;
+      background-color: transparent;
+      background-image: none; // Remove CSS gradient
+      .reset-filter();
+      cursor: not-allowed;
+    }
+  }
+}
+
+// Dropdown section headers
+.am-dropdown-header {
+  display: block;
+  padding: 6px 20px;
+  font-size: @font-size-xs;
+  color: @dropdown-header-color;
+}
+
+
+// Right aligned dropdown
+// =============================================================================
+
+.am-fr > .am-dropdown-content {
+  right: 0;
+  left: auto;
+
+  &:before {
+    right: 10px;
+    left: auto;
+  }
+}
+
+
+// Hooks
+// =============================================================================
+
+// TODO: 1. 分隔线上下间距调整
+//       2. 位置设置
+//       3. 与 navbar 混合
