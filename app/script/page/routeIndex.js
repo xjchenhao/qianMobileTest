@@ -6,6 +6,7 @@
  * @version $V1.0$
  */
 define(function (require, exports, module) {
+    require('zepto');
     var Mobilebone = require('mobilebone');
     var myScroll;                   //用于存储iscroll的对象
     //--------------------------------------------------【转场nav样式选中】
@@ -37,20 +38,32 @@ define(function (require, exports, module) {
             //console.log('出首页');
         },
         listInto: function (pageInto, pageOut, response) {
-            //console.log('入列表页');
+            //--------------------------------------------------【初始化数据】
+            $.ajax({
+                url: "script/ajax/list.json",
+                type: "post",
+                dataType: "json",
+                success: function (data) {
+                    require.async('handlebars', function () {
+                        var tpl = require('ajax/list.tpl');
+                        var myTemplate = Handlebars.compile(tpl);
+                        document.querySelector('#pageList .am-list').innerHTML = myTemplate(data);
+                    });
+                }
+            });
             //--------------------------------------------------【主体部分滚动条】
             myScroll = require('iscroll-probe');
             myScroll = new IScroll('#pageList', {
                 scrollbars: false,
                 mouseWheel: true,
                 probeType: 2,
-                startY:70
+                startY: 70
             });
             var scrollY;    //记录Y轴变化
-            myScroll.on('scroll', function(){
+            myScroll.on('scroll', function () {
                 var loadTop = this.wrapper.querySelector('.loading-top'),
                     loadSpan = loadTop.getElementsByTagName('span')[0];
-                scrollY=this.y;
+                scrollY = this.y;
                 if (scrollY > 70) {
                     loadSpan.innerHTML = '释放更新';
                     loadTop.classList.add('on');
@@ -59,8 +72,8 @@ define(function (require, exports, module) {
                     loadTop.classList.remove('on');
                 }
             });
-            myScroll.on('scrollEnd', function(){
-                if(this.y>>0===0&&scrollY>70){
+            myScroll.on('scrollEnd', function () {
+                if (this.y >> 0 === 0 && scrollY > 70) {
                     console.log('数据更新');
                 }
             });
