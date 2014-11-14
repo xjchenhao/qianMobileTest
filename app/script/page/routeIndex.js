@@ -54,7 +54,7 @@ define(function (require, exports, module) {
             //--------------------------------------------------【主体部分滚动条】
             myScroll = require('iscroll-probe');
             myScroll = new IScroll('#pageList', {
-                scrollbars: false,
+                scrollbars: true,
                 mouseWheel: true,
                 probeType: 2,
                 startY: 70
@@ -76,6 +76,28 @@ define(function (require, exports, module) {
                 if (this.y >> 0 === 0 && scrollY > 70) {
                     console.log('数据更新');
                 }
+                console.log(this.scrollerHeight);
+                console.log(this.wrapperHeight);
+                if (this.y <= -(this.scrollerHeight - this.wrapperHeight)) {
+                    $.ajax({
+                        url: "script/ajax/list.json",
+                        type: "post",
+                        dataType: "json",
+                        success: function (data) {
+                            require.async('handlebars', function () {
+                                var tpl = require('ajax/list.tpl');
+                                var myTemplate = Handlebars.compile(tpl);
+                                document.querySelector('#pageList .am-list').innerHTML += myTemplate(data);
+                                setTimeout(function () {
+                                    myScroll.refresh();
+                                }, 200);
+                            });
+                        }
+                    });
+                }
+            });
+            myScroll.on('scroll', function () {
+                //console.log(this);
             });
             setTimeout(function () {
                 var loadTop = document.querySelector('.loading-top'),
@@ -122,7 +144,7 @@ define(function (require, exports, module) {
     //        return false;
     //    }
     //    console.log(currentIndex);
-    //    var navbarLi = document.querySelector('#navbar ul').getElementsByTagName('li')[currentIndex].getElementsByTagName('a')[0];
-    //    location.href=navbarLi.href;
-    //}, false);
+    //    var navbarLi = document.querySelector('#navbar
+    // ul').getElementsByTagName('li')[currentIndex].getElementsByTagName('a')[0]; location.href=navbarLi.href; },
+    // false);
 });
