@@ -77,23 +77,23 @@ define(function (require, exports, module) {
                 if (this.y >> 0 === 0 && scrollY > 70) {
                     console.log('数据更新');
                 }
-                //if (this.y <= -(this.scrollerHeight - this.wrapperHeight)) {
-                //    $.ajax({
-                //        url: "script/ajax/list.json",
-                //        type: "post",
-                //        dataType: "json",
-                //        success: function (data) {
-                //            require.async('handlebars', function () {
-                //                setTimeout(function () {
-                //                    var tpl = require('ajax/list.tpl');
-                //                    var myTemplate = Handlebars.compile(tpl);
-                //                    document.querySelector('#pageList .am-list').innerHTML += myTemplate(data);
-                //                    myScroll.refresh();
-                //                }, 500);
-                //            });
-                //        }
-                //    });
-                //}
+                if (this.y <= -(this.scrollerHeight - this.wrapperHeight)) {
+                    $.ajax({
+                        url: "script/ajax/list.json",
+                        type: "post",
+                        dataType: "json",
+                        success: function (data) {
+                            require.async('handlebars', function () {
+                                setTimeout(function () {
+                                    var tpl = require('ajax/list.tpl');
+                                    var myTemplate = Handlebars.compile(tpl);
+                                    document.querySelector('#pageList .am-list').innerHTML += myTemplate(data);
+                                    myScroll.refresh();
+                                }, 500);
+                            });
+                        }
+                    });
+                }
             });
             setTimeout(function () {
                 var loadTop = document.querySelector('.loading-top'),
