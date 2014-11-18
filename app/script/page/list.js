@@ -1,3 +1,10 @@
+/**
+ * 钱庄网
+ * @name list页面
+ * @description 页面js
+ * @date 2014-11-18
+ * @version $V1.0$
+ */
 define(function (require, exports, module) {
     module.exports = function(){
         //--------------------------------------------------【初始化数据】

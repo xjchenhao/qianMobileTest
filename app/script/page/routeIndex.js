@@ -1,8 +1,8 @@
 /**
  * 钱庄网
- * @name index页面
+ * @name index文件
  * @description Mobilebone页面路由
- * @date 2014-11-04
+ * @date 2014-11-18
  * @version $V1.0$
  */
 define(function (require, exports, module) {
