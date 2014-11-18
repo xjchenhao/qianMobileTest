@@ -8,8 +8,6 @@
 define(function (require, exports, module) {
     require('zepto');
     var Mobilebone = require('mobilebone');
-    var myScroll,                   //用于存储iscroll的对象
-        Infinite;
     //--------------------------------------------------【转场nav样式选中】
     Mobilebone.callback = function (page_in, page_out) {
         var id_in = page_in.id,
@@ -39,115 +37,18 @@ define(function (require, exports, module) {
             //console.log('出首页');
         },
         listInto: function (pageInto, pageOut, response) {
-            //--------------------------------------------------【初始化数据】
-            $.ajax({
-                url: "script/ajax/list.json",
-                type: "post",
-                dataType: "json",
-                success: function (data) {
-                    require.async('handlebars', function () {
-                        var tpl = require('ajax/list.tpl');
-                        var myTemplate = Handlebars.compile(tpl);
-                        document.querySelector('#pageList .am-list').innerHTML = myTemplate(data);
-                    });
-                }
-            });
-            //--------------------------------------------------【主体部分滚动条】
-            myScroll = require('iscroll-probe');
-            myScroll = new IScroll('#pageList', {
-                scrollbars: true,
-                mouseWheel: true,
-                probeType: 2,
-                startY: 70
-            });
-            var scrollY;    //记录Y轴变化
-            myScroll.on('scroll', function () {
-                var loadTop = this.wrapper.querySelector('.loading-top'),
-                    loadSpan = loadTop.getElementsByTagName('span')[0];
-                scrollY = this.y;
-                if (scrollY > 70) {
-                    loadSpan.innerHTML = '释放更新';
-                    loadTop.classList.add('on');
-                } else {
-                    loadSpan.innerHTML = '下拉刷新';
-                    loadTop.classList.remove('on');
-                }
-            });
-            myScroll.on('scrollEnd', function () {
-                if (this.y >> 0 === 0 && scrollY > 70) {
-                    console.log('数据更新');
-                }
-                if (this.y <= -(this.scrollerHeight - this.wrapperHeight)) {
-                    $.ajax({
-                        url: "script/ajax/list.json",
-                        type: "post",
-                        dataType: "json",
-                        success: function (data) {
-                            require.async('handlebars', function () {
-                                setTimeout(function () {
-                                    var tpl = require('ajax/list.tpl');
-                                    var myTemplate = Handlebars.compile(tpl);
-                                    document.querySelector('#pageList .am-list').innerHTML += myTemplate(data);
-                                    myScroll.refresh();
-                                }, 500);
-                            });
-                        }
-                    });
-                }
-            });
-            setTimeout(function () {
-                var loadTop = document.querySelector('.loading-top'),
-                    loadSpan = loadTop.getElementsByTagName('span')[0];
-                loadSpan.innerHTML = '正在刷新';
-                loadTop.classList.add('on');
-                myScroll.refresh();
-            }, 800);
+            Mobilebone.INTO=require('page/list');
+            Mobilebone.OUT=Mobilebone.INTO();
         },
         listOut: function (pageInto, pageOut, response) {
-            //console.log('出列表页');
-            myScroll.destroy();
-            //myScroll = null;
+            Mobilebone.OUT();
         },
         userInto: function (pageInto, pageOut, response) {
-            //--------------------------------------------------【初始化数据】
-            $.ajax({
-                url: "script/ajax/list.json",
-                type: "post",
-                dataType: "json",
-                success: function (data) {
-                    require.async('handlebars', function () {
-                        var tpl = require('ajax/list.tpl');
-                        var myTemplate = Handlebars.compile(tpl);
-                        document.querySelector('#pageUser .am-list').innerHTML = myTemplate(data);
-                    });
-                }
-            });
-            //--------------------------------------------------【无限滚动】
-            Infinite = require('module/infinite');
-            Infinite = new Infinite({
-                box: document.getElementById('pageUser'),
-                con: document.querySelector('#pageUser .am-list-news-bd'),
-                callback: function () {
-                    $.ajax({
-                        url: "script/ajax/list.json",
-                        type: "post",
-                        dataType: "json",
-                        success: function (data) {
-                            require.async('handlebars', function () {
-                                setTimeout(function () {
-                                    var tpl = require('ajax/list.tpl');
-                                    var myTemplate = Handlebars.compile(tpl);
-                                    document.querySelector('#pageUser .am-list').innerHTML += myTemplate(data);
-                                }, 500);
-                            });
-                        }
-                    });
-                }
-            });
+            Mobilebone.INTO=require('page/user');
+            Mobilebone.OUT=Mobilebone.INTO();
         },
         userOut: function (pageInto, pageOut, response) {
-            Infinite.destroy();
-            //Infinite = null;
+            Mobilebone.OUT();
         }
     };
     Mobilebone.init();
