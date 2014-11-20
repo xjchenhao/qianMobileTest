@@ -35,3 +35,15 @@ figure {
   -o-transform: rotate(180deg);
   transform: rotate(180deg);
 }
+.img-load-box {
+  padding-left: 0;
+  font-size: 0;
+}
+.img-load-box li {
+  display: inline-block;
+  list-style: none;
+  width: 50%;
+  padding-bottom: 30%;
+  height: 0;
+  overflow: hidden;
+}

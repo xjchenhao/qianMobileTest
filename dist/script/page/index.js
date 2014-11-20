@@ -1,1 +1,0 @@
-define(function(require){require("zepto"),require("amazeui"),$(".am-slider").flexslider()});

@@ -9,21 +9,21 @@ define(function (require, exports, module) {
     require('zepto');
     var Mobilebone = require('mobilebone');
     //--------------------------------------------------【转场nav样式选中】
-    Mobilebone.callback = function (page_in, page_out) {
-        var id_in = page_in.id,
-            id_out = "";
-        var ele_link_in = null,
-            ele_link_out = null;
-        if (ele_link_in = document.querySelector("nav a[href$=" + id_in + "]")) {
-            ele_link_in.parentElement.classList.add("active");
-        }
-        if (page_out) {
-            id_out = page_out.id;
-            ele_link_out = id_out && document.querySelector("nav a[href$=" + id_out + "]");
-            ele_link_out && ele_link_out.parentElement.classList.remove("active");
-        }
-    };
-    Mobilebone.mergeCallback = true;
+    //Mobilebone.callback = function (page_in, page_out) {
+    //    var id_in = page_in.id,
+    //        id_out = "";
+    //    var ele_link_in = null,
+    //        ele_link_out = null;
+    //    if (ele_link_in = document.querySelector("nav a[href$=" + id_in + "]")) {
+    //        ele_link_in.parentElement.classList.add("active");
+    //    }
+    //    if (page_out) {
+    //        id_out = page_out.id;
+    //        ele_link_out = id_out && document.querySelector("nav a[href$=" + id_out + "]");
+    //        ele_link_out && ele_link_out.parentElement.classList.remove("active");
+    //    }
+    //};
+    //Mobilebone.mergeCallback = true;
     //--------------------------------------------------【路由】
     Mobilebone.rootTransition = {
         homInit: function () {
@@ -49,6 +49,13 @@ define(function (require, exports, module) {
         },
         userOut: function (pageInto, pageOut, response) {
             Mobilebone.OUT();
+        },
+        imgInto:function(pageInto, pageOut, response) {
+            Mobilebone.INTO=require('page/imgload');
+            Mobilebone.OUT=Mobilebone.INTO();
+        },
+        imgOut:function (pageInto, pageOut, response) {
+            //console.log('456');
         }
     };
     Mobilebone.init();
