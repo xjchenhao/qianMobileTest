@@ -55,7 +55,7 @@ define(function (require, exports, module) {
             Mobilebone.OUT=Mobilebone.INTO();
         },
         imgOut:function (pageInto, pageOut, response) {
-            //console.log('456');
+            Mobilebone.OUT();
         }
     };
     Mobilebone.init();

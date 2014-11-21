@@ -9,6 +9,20 @@ define(function (require, exports, module) {
     //--------------------------------------------------【引入依赖函数】
     require('zepto');
     require('amazeui');
-
-
+    //--------------------------------------------------【侧栏导航】
+    //console.dir($('#asideNav'));
+    $('#asideBtn').click(function(){
+        $('body').addClass('am-offcanvas-page').css({
+            '-webkit-transform':'translateZ(0) translateX(-200px)',
+            'transform':'translateZ(0) translateX(-200px)'
+        });
+        $('#asideNav').show();
+    });
+    $("#asideNav").click(function(){
+        $('body').removeClass('am-offcanvas-page').css({
+            '-webkit-transform':'translateZ(0) translateX(0)',
+            'transform':'translateZ(0) translateX(0)'
+        });
+        $('#asideNav').hide();
+    });
 });

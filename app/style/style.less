@@ -1,3 +1,4 @@
+body{ overflow:initial;}
 figure {
   display: inline-block;
 }
@@ -33,12 +34,17 @@ figure {
   -o-transform: rotate(180deg);
   transform: rotate(180deg);
 }
-.img-load-box { padding-left: 0;font-size:0
-//  -moz-column-count: 2;
-//  -webkit-column-count: 2;
-//  column-count: 2;
-//  -webkit-column-gap: 0;
-//  -moz-column-gap: 0;
-//  column-gap: 0;
-}
+.img-load-box { padding-left: 0;font-size:0}
 .img-load-box li{ display: inline-block;list-style:none; width:50%; padding-bottom: 30%; height:0; overflow: hidden;}
+
+.am-offcanvas-page{-webkit-transition: all 0.3s ease-in-out; transition: all 0.3s ease-in-out;}
+.aside-nav{display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1090;
+  background: rgba(0,0,0,.15);}
+.aside-nav ul{ position: absolute; right: 0; top: 0; bottom: 0;background-color:#333;width: 200px;-webkit-transform: translate(200px,0);transform: translate(200px,0); margin: 0;}
+.aside-nav li{ margin: 0; padding: 0;list-style: none;color:#999}
