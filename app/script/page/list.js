@@ -6,7 +6,7 @@
  * @version $V1.0$
  */
 define(function (require, exports, module) {
-    module.exports = function(){
+    module.exports = function () {
         //--------------------------------------------------【初始化数据】
         $.ajax({
             url: "script/ajax/list.json",
@@ -52,12 +52,10 @@ define(function (require, exports, module) {
                     dataType: "json",
                     success: function (data) {
                         require.async('handlebars', function () {
-                            setTimeout(function () {
-                                var tpl = require('ajax/list.tpl');
-                                var myTemplate = Handlebars.compile(tpl);
-                                document.querySelector('#pageList .am-list').innerHTML += myTemplate(data);
-                                myScroll.refresh();
-                            }, 500);
+                            var tpl = require('ajax/list.tpl');
+                            var myTemplate = Handlebars.compile(tpl);
+                            document.querySelector('#pageList .am-list').innerHTML += myTemplate(data);
+                            myScroll.refresh();
                         });
                     }
                 });
@@ -71,9 +69,9 @@ define(function (require, exports, module) {
             myScroll.refresh();
         }, 800);
         //--------------------------------------------------【返回内存释放接口】
-        return function(){
+        return function () {
             myScroll.destroy();
-            myScroll=null;
+            myScroll = null;
         }
     };
 });

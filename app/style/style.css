@@ -39,8 +39,10 @@ figure {
   transform: rotate(180deg);
 }
 .img-load-box {
-  padding-left: 0;
+  padding: 0;
+  margin: 0;
   font-size: 0;
+  line-height: 0;
 }
 .img-load-box li {
   display: inline-block;
@@ -73,6 +75,7 @@ figure {
   width: 200px;
   -webkit-transform: translate(200px, 0);
   transform: translate(200px, 0);
+  transition-timing-function: ease-in;
   margin: 0;
 }
 .aside-nav li {
@@ -80,4 +83,18 @@ figure {
   padding: 0;
   list-style: none;
   color: #999999;
+}
+.am-navbar {
+  position: absolute;
+}
+.am-header-nav a {
+  display: inline-block;
+  width: 30px;
+  text-align: center;
+}
+.am-navbar {
+  line-height: 100%;
+}
+.mask {
+  top: 0;
 }
