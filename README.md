@@ -5,6 +5,7 @@ mobileWeb测试
 ##在线地址
 [http://qiantest.sinaapp.com/#&pageHome](http://qiantest.sinaapp.com/#&pageHome)
 
+![扫一扫](http://qiantest.sinaapp.com/image/erw.png)
 
 ##测试项
 
