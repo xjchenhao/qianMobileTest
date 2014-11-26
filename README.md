@@ -19,7 +19,8 @@ mobileWeb测试
 
 ##经验和思考
 
-1. 做为mobileWeb并不适合用app的hander和tab底部，太占屏幕了（如果把网页添加到桌面用户体验还不错）<还有侧栏导航，这些是在原生app上的东西 感觉没必要模仿到mobileWeb中>
-2. 模块化开发的时候需要提供额内存销毁功能，在转出页面后应当回收相关的内存
-3. amazeui大而全且没有内存回收api不是很适合spa页面，但是其中很多东西值得学习借鉴
-4. 移动端相关的功能组件太少了，所以维护了一个组件库[mobileModule](https://github.com/xjchenhao/mobileModule)
+1. 做为mobileWeb并不适合用app的hander和tab底部，太占屏幕了（如果把网页添加到桌面用户体验还不错）
+2. 还有侧栏导航，这些是在原生app上的东西 感觉没必要模仿到mobileWeb中
+3. 模块化开发的时候需要提供额内存销毁功能，在转出页面后应当回收相关的内存
+4. amazeui大而全且没有内存回收api不是很适合spa页面，但是其中很多东西值得学习借鉴
+5. 网络上移动端相关的功能组件太少了，所以维护了一个组件库[mobileModule](https://github.com/xjchenhao/mobileModule)
