@@ -1,5 +1,5 @@
 /**
- * scroll-imgload图片滚动加载      1.0.0
+ * scroll-imgload图片滚动加载      1.0.1
  * eg:
  *
  * <ul>
@@ -66,12 +66,11 @@
         var self = this,
             isMoving = 0,              //是否在触摸过程中
             scrollTop = post = posb = 0;
-        hasTouch = (function () {
+        var hasTouch = (function () {
             return !!(('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch);
         })();
         this.event = {
             start: function (e) {
-                isMoving = true;
                 clearTimeout(isMoving);
             },
             end: function (e) {
@@ -90,6 +89,9 @@
                         if (post >= 0 && post < self.boxHeight || posb > 0 && posb <= self.boxHeight) {
                             if (data.tag === 'img') {
                                 data.node.setAttribute('src', data.url);
+                                this.callback && this.callback(data.node);
+                            }else{
+                                data.node.setAttribute('style', data.node.getAttribute('style')+';background-image:url('+data.url+')');
                                 this.callback && this.callback(data.node);
                             }
                             data.node = null;
