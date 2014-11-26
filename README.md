@@ -5,7 +5,7 @@ mobileWeb测试
 ##在线地址
 [http://qiantest.sinaapp.com/#&pageHome](http://qiantest.sinaapp.com/#&pageHome)
 
-![扫一扫](http://qiantest.sinaapp.com/image/erw.png)
+![扫一扫](http://qiantest.sinaapp.com/image/erw.jpg)
 
 ##测试项
 
@@ -24,4 +24,4 @@ mobileWeb测试
 2. 还有侧栏导航，这些是在原生app上的东西 感觉没必要模仿到mobileWeb中
 3. 模块化开发的时候需要提供额内存销毁功能，在转出页面后应当回收相关的内存
 4. amazeui大而全且没有内存回收api不是很适合spa页面，但是其中很多东西值得学习借鉴
-5. 网络上移动端相关的功能组件太少了，所以维护了一个组件库[mobileModule](https://github.com/xjchenhao/mobileModule) 
+5. 网络上移动端相关的功能组件太少了，所以维护了一个组件库[mobileModule](https://github.com/xjchenhao/mobileModule)
