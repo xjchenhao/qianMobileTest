@@ -7,11 +7,13 @@
  */
 define(function (require, exports, module) {
     module.exports = function () {
+        require('zepto');
         //--------------------------------------------------【初始化数据】
         $.ajax({
             url: "script/ajax/list.json",
             type: "post",
             dataType: "json",
+            async:false,
             success: function (data) {
                 require.async('handlebars', function () {
                     var tpl = require('ajax/list.tpl');
@@ -19,6 +21,21 @@ define(function (require, exports, module) {
                     document.querySelector('#pageList .am-list').innerHTML = myTemplate(data);
                 });
             }
+        });
+        //--------------------------------------------------【文章标题绑定弹框事件】
+        var Pop=require('module/pop');
+        var alertPop=new Pop({
+            type:'alert',
+            content:'暂未添加链接'
+        });
+        $('.am-list').each(function(){
+            $(this).on('click','.am-list-item-hd',function(){
+                alertPop.pop($(this).text());
+                alertPop.pop();
+                alertPop.pop();
+                alertPop.pop();
+                alertPop.pop();
+            });
         });
         //--------------------------------------------------【主体部分滚动条】
         require('iscroll-probe');
