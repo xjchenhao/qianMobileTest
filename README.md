@@ -9,7 +9,7 @@ mobileWeb测试
 
 ##测试项
 
-1. [mobilebone](http://www.zhangxinxu.com/wordpress/2014/10/mobilebone-js-mobile-web-app-core/)做spa页面，并结合[seajs](seajs.org)做了路由表
+1. [mobilebone](http://www.zhangxinxu.com/wordpress/2014/10/mobilebone-js-mobile-web-app-core/)做spa页面，并结合[seajs](http://seajs.org/)做了路由表
 2. 数据通过json传递，[handlebars](http://handlebarsjs.com/) DOM拼接
 3. pageHome页面使用了[amazeui](http://amazeui.org/)的组件
 4. pageList页面用了[iscroll](http://cubiq.org/iscroll-5)做 *视图滚动* ，基于它写了下拉刷新和无限加载
