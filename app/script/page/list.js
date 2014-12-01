@@ -89,6 +89,11 @@ define(function (require, exports, module) {
         return function () {
             myScroll.destroy();
             myScroll = null;
+            alertPop.destroy();
+            alertPop=null;
+            $('.am-list').each(function(){
+                $(this).off('click');
+            });
         }
     };
 });
