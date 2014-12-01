@@ -58,6 +58,7 @@ define(function (require, exports, module) {
             Mobilebone.OUT();
         }
     };
+    $('body').css('background','inherit');
     Mobilebone.init();
     //--------------------------------------------------【滑动转场】
     //var currentIndex = 0, startX, startY;
