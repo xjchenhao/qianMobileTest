@@ -11,12 +11,14 @@ mobileWeb测试
 
 1. [mobilebone](http://www.zhangxinxu.com/wordpress/2014/10/mobilebone-js-mobile-web-app-core/)做spa页面，并结合[seajs](http://seajs.org/)做了路由表
 2. 数据通过json传递，[handlebars](http://handlebarsjs.com/) DOM拼接
+3. 把[animate.css](http://daneden.github.io/animate.css/)作为基础动画库
 3. pageHome页面使用了[amazeui](http://amazeui.org/)的组件
 4. pageList页面用了[iscroll](http://cubiq.org/iscroll-5)做 *视图滚动* ，基于它写了下拉刷新和无限加载
-5. pageUser页面利用css3原生的`overflow-scrolling: touch;`写了原生的 *视图滚动* ，基于`infinite.js`模块写了无限下拉加载
-6. imgload页面基于`scroll-imgload.js`模块写了图片的懒加载（只加载当前看到的视图上的图片），在快速滚动屏幕的情况下不触发加载
-7. 用css3写了侧栏导航功能
-8. [fis](http://fis.baidu.com/)工程化发布
+5. pageUser页面文章标题基于`pop.js`模块写了模拟alert提醒功能
+6. pageUser页面利用css3原生的`overflow-scrolling: touch;`写了原生的 *视图滚动* ，基于`infinite.js`模块写了无限下拉加载
+7. imgload页面基于`scroll-imgload.js`模块写了图片的懒加载（只加载当前看到的视图上的图片），在快速滚动屏幕的情况下不触发加载
+8. 用css3写了侧栏导航功能
+9. [fis](http://fis.baidu.com/)工程化发布
 
 ##经验和思考
 
