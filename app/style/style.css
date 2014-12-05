@@ -121,6 +121,8 @@ figure {
   background-color: rgba(0, 0, 0, 0.5);
   color: #fff;
   border-radius: 5px;
+  -webkit-animation-duration: .3s;
+  animation-duration: .3s;
 }
 #pop-close {
   position: absolute;
@@ -154,68 +156,4 @@ figure {
   height: 10px;
   background-color: #fff;
   margin: -5px 0 0 -1px;
-}
-@-webkit-keyframes zoomIn {
-  0% {
-    opacity: 0;
-    -webkit-transform: scale3d(0.3, 0.3, 0.3);
-    transform: scale3d(0.3, 0.3, 0.3);
-  }
-  50% {
-    opacity: 1;
-  }
-}
-@keyframes zoomIn {
-  0% {
-    opacity: 0;
-    -webkit-transform: scale3d(0.3, 0.3, 0.3);
-    -ms-transform: scale3d(0.3, 0.3, 0.3);
-    transform: scale3d(0.3, 0.3, 0.3);
-  }
-  50% {
-    opacity: 1;
-  }
-}
-.pop-inio {
-  -webkit-animation-duration: .1s;
-  animation-duration: .1s;
-  -webkit-animation-fill-mode: both;
-  animation-fill-mode: both;
-  -webkit-animation-name: zoomIn;
-  animation-name: zoomIn;
-}
-@-webkit-keyframes zoomOut {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-    -webkit-transform: scale3d(0.3, 0.3, 0.3);
-    transform: scale3d(0.3, 0.3, 0.3);
-  }
-  100% {
-    opacity: 0;
-  }
-}
-@keyframes zoomOut {
-  0% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-    -webkit-transform: scale3d(0.3, 0.3, 0.3);
-    -ms-transform: scale3d(0.3, 0.3, 0.3);
-    transform: scale3d(0.3, 0.3, 0.3);
-  }
-  100% {
-    opacity: 0;
-  }
-}
-.pop-out {
-  -webkit-animation-duration: .1s;
-  animation-duration: .1s;
-  -webkit-animation-fill-mode: both;
-  animation-fill-mode: both;
-  -webkit-animation-name: zoomOut;
-  animation-name: zoomOut;
 }
