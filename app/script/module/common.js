@@ -19,10 +19,13 @@ define(function (require, exports, module) {
         $('#asideNav').show();
     });
     $("#asideNav").click(function(){
-        $('body').removeClass('am-offcanvas-page').css({
+        $('body').css({
             '-webkit-transform':'translateZ(0) translateX(0)',
             'transform':'translateZ(0) translateX(0)'
         });
-        $('#asideNav').hide();
+        setTimeout(function(){
+            $('#asideNav').hide();
+            $('body').removeClass('am-offcanvas-page')
+        },300)
     });
 });

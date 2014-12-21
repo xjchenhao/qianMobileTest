@@ -1,5 +1,6 @@
 body {
   overflow: initial;
+  background: url("../image/loading.gif") no-repeat center center;
 }
 figure {
   display: inline-block;
@@ -11,9 +12,10 @@ figure {
   top: 49px !important;
   bottom: 49px !important;
   height: auto !important;
-  overflow-scrolling: touch;
   -webkit-overflow-scrolling: touch;
+  overflow-scrolling: touch;
   overflow-y: scroll;
+  background-color: #fff;
 }
 .am-list-news {
   position: relative;
@@ -39,8 +41,10 @@ figure {
   transform: rotate(180deg);
 }
 .img-load-box {
-  padding-left: 0;
+  padding: 0;
+  margin: 0;
   font-size: 0;
+  line-height: 0;
 }
 .img-load-box li {
   display: inline-block;
@@ -73,6 +77,7 @@ figure {
   width: 200px;
   -webkit-transform: translate(200px, 0);
   transform: translate(200px, 0);
+  transition-timing-function: ease-in;
   margin: 0;
 }
 .aside-nav li {
@@ -80,4 +85,75 @@ figure {
   padding: 0;
   list-style: none;
   color: #999999;
+}
+.am-navbar {
+  position: absolute;
+}
+.am-header-nav a {
+  display: inline-block;
+  width: 30px;
+  text-align: center;
+}
+.am-navbar {
+  line-height: 100%;
+}
+.mask {
+  top: 0;
+}
+#pop-mask {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1000;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+#pop-content {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  z-index: 1001;
+  min-width: 50px;
+  min-height: 50px;
+  max-width: 200px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  border-radius: 5px;
+  -webkit-animation-duration: .3s;
+  animation-duration: .3s;
+}
+#pop-close {
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  width: 20px;
+  height: 20px;
+  background-color: red;
+  border-radius: 100%;
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+#pop-close:after {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 10px;
+  height: 2px;
+  background-color: #fff;
+  margin: -1px 0 0 -5px;
+}
+#pop-close:before {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 2px;
+  height: 10px;
+  background-color: #fff;
+  margin: -5px 0 0 -1px;
 }

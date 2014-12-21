@@ -23,30 +23,24 @@
 	var array = [];
 	var slice = array.slice;
 
-	var supportHistory = "pushState" in history &&
-		"replaceState" in history &&
-			// When running inside a FF iframe, calling replaceState causes an error
-		!( window.navigator.userAgent.indexOf( "Firefox" ) >= 0 && window.top !== window ) &&
-		( window.navigator.userAgent.search(/CriOS/) === -1 );
+	// Is it a simple selector, from jQuery
+	var isSimple = /^.[^:#\[\.,]*$/
+
+	// Is it suppory history API
+	var supportHistory = "pushState" in history && "replaceState" in history;
 
 	Mobilebone.support = supportHistory;
 
 	if (supportHistory == false) return Mobilebone;
+
+	var hasInited = false;
 
 	/**
 	 * Current version of the library. Keep in sync with `package.json`.
 	 *
 	 * @type string
 	 **/
-	Mobilebone.VERSION = '1.1.4';
-
-	/**
-	 * Whether bind events when dom ready
-	 * If the value is false, u should use 'Mobilebone.init();' to initialize.
-	 *
-	 * @type boolean
-	 **/
-	Mobilebone.autoInit = true;
+	Mobilebone.VERSION = '1.1.7';
 
 	/**
 	 * Whether catch attribute of href from element with tag 'a'
@@ -102,13 +96,20 @@
 	 **/
 	Mobilebone.pushStateEnabled = true;
 
+	if (// When running inside a FF iframe, calling replaceState causes an error. So set 'pushStateEnabled = false' 
+		(window.navigator.userAgent.indexOf( "Firefox" ) >= 0 && window.top !== window)
+	) {
+		Mobilebone.pushStateEnabled = false;
+	}
+
+
 	/**
 	 * Function for transition
 	 * In most cases, you are unnecessary to use this function , unlike Mobilebone.createPage
 
 	 * @params  pageInto: dom-object. Element which will transform into. - Necessary
-	 pageOut:  dom-object. Elementwhich will transform out.   - Optional
-	 back:     boolean.    Direction of tranisition.          - Optional
+	 pageOut:  dom-object. Element which will transform out.   - Optional
+	 back:     boolean.    Direction of transition.          - Optional
 	 options:  object.     Cover or add parameters.           - Optional
 	 * @returns undefined
 	 * @example Mobilebone.transition(element);
@@ -134,7 +135,7 @@
 			root: this.rootTransition,
 			// the form of transition, the value (eg. 'slide') will be a className to add or remove. 
 			// of course, u can set to other valeu, for example, 'fade' or 'flip'. However, u shou add corresponding CSS3 code.
-			form: 'slide',
+			form: this.form || 'slide',
 			// 'animationstart/animationend/...' are callbacks params
 			// Note: those all global callbacks!
 			onpagefirstinto: this.onpagefirstinto,
@@ -217,10 +218,10 @@
 				pageInto.setAttribute("data-title", document.title);
 			}
 
-			// delete page with same id
+			// delete page with same id when options.remove !== false
 			var pageid = options.id || pageInto.id;
 
-			if (store[pageid] && store[pageid] != pageInto) {
+			if (options.remove !== false && store[pageid] && store[pageid] != pageInto && store[pageid].parentElement) {
 				store[pageid].parentElement.removeChild(store[pageid]);
 				delete store[pageid];
 			}
@@ -299,7 +300,7 @@
 
 	 * @params  trigger: dom-object. element with tag-"a".  - Optional(at least one)
 	 url:     string. ajax url.                  - Optional(at least one)
-	 params:  string|opject. ajax params.        - Optional
+	 params:  string|object. ajax params.        - Optional
 	 * @returns string
 	 * @example Mobilebone.getCleanUrl(elementOfA);
 	 Mobilebone.getCleanUrl(elementOfA, '', "a=1&b=2");
@@ -357,24 +358,6 @@
 	};
 
 	/**
-	 * Get page element that contains given element
-
-	 * @params  children: dom-object. - Necessary
-	 * @returns page element|null
-	 * @example Mobilebone.getCleanUrl(childElement);
-	 *
-	 **/
-	Mobilebone.getPage = function(children) {
-		var _page = null;
-		slice.call(document.querySelectorAll("." + this.classPage)).forEach(function(page) {
-			if (_page == null && page.contains(children)) {
-				_page = page;
-			}
-		});
-		return _page;
-	};
-
-	/**
 	 * Create page according to given Dom-element or HTML string. And, notice!!!!! will do transition auto.
 
 	 * @params  dom_or_html:        dom-object|string. Create this to dom element as a role of into-page.               - Necessary
@@ -386,8 +369,8 @@
 	 Mobilebone.createPage('<div class="page out">xxx</div>');
 	 Mobilebone.createPage('<p>xxx</p>');
 	 Mobilebone.createPage(pageDom, triggerLink);
-	 Mobilebone.createPage(pageDom, { reponse: '<div...>' });
-	 Mobilebone.createPage(pageDom, triggerLink, { reponse: '<div...>' });
+	 Mobilebone.createPage(pageDom, { response: '<div...>' });
+	 Mobilebone.createPage(pageDom, triggerLink, { response: '<div...>' });
 	 *
 	 **/
 	Mobilebone.createPage = function(dom_or_html, element_or_options, options) {
@@ -403,10 +386,7 @@
 		if (element_or_options) {
 			if (element_or_options.nodeType == 1) {
 				// legal elements
-				if (element_or_options.classList.contains(this.classPage)) {
-					current_page = element_or_options;
-				} else if (element_or_options.href) {
-					current_page = this.getPage(element_or_options);
+				if (element_or_options.href) {
 					page_title = element_or_options.getAttribute("data-title") || options.title;
 				}
 				response = options.response;
@@ -458,7 +438,7 @@
 	 * @params  keys:        string. - Necessary
 	 * @returns function
 	 undefined keys is not string
-	 window    keys unfinded
+	 window    keys undefined
 	 * @example Mobilebone.getFunction("a.b.c");
 	 *
 	 **/
@@ -686,10 +666,11 @@
 	 * Initialization. Load page according to location.hash. And bind link-catch events.
 	 **/
 		Mobilebone.init = function() {
+			if (hasInited == true) return 'Don\'t repeat initialization!';
 			var hash = location.hash.replace("#&", "#"), ele_in = null;
 			if (hash == "" || hash == "#") {
 				this.transition(document.querySelector("." + this.classPage));
-			} else if (/&/.test(hash) == false && (ele_in = document.querySelector(hash)) && ele_in.classList.contains(this.classPage)) { // 'ele_in' must be a page element
+			} else if (isSimple.test(hash) == true && (ele_in = document.querySelector(hash)) && ele_in.classList.contains(this.classPage)) { // 'ele_in' must be a page element
 				this.transition(ele_in);
 			} else {
 				// as a ajax
@@ -706,9 +687,31 @@
 			// Initialization link-catch events.
 			var eventName = "click", $ = root.$ || root.jQuery || root.Zepto;
 			if ($ && $.fn && $.fn.tap) eventName = "tap";
+
 			if (this.captureLink == true) {
 				document.addEventListener(eventName, this.handleTapEvent);
+				if (eventName == "tap") {
+					// zepto tap event.preventDefault can't prevent default click-events
+					document.addEventListener("click", function(event) {
+						var target = event.target;
+						if (!target) return;
+						if (target.tagName.toLowerCase() != "a" && !(target = target.getParentElementByTag("a"))) {
+							return;
+						}
+						var ajax = target.getAttribute("data-ajax"), href = target.href;
+						// if not ajax request
+						if (target.getAttribute("data-rel") == "external"
+							|| ajax == "false"
+							|| (href.split("/")[0] !== location.href.split("/")[0] && ajax != "true")
+							|| (Mobilebone.captureLink == false && ajax != "true")
+						) return;
+
+						event.preventDefault();
+					});
+				}
 			}
+			// change flag-var for avoiding repeat init
+			hasInited = true;
 		};
 
 	/**
@@ -717,10 +720,10 @@
 	Mobilebone.handleTapEvent = function(event) {
 		// get target and href
 		var target = event.target || event.touches[0], href = target.href;
-
-		if (!href && (target = target.getParentElementByTag("a"))) {
+		if ((!href || /a/i.test(target.tagName) == false) && (target = target.getParentElementByTag("a"))) {
 			href = target.href;
 		}
+
 		// the page that current touched or actived
 		var self_page = document.querySelector(".in." + Mobilebone.classPage);
 
@@ -751,6 +754,10 @@
 		// 2. javascript: (except data-rel="back")
 		// 3. cros, or not capture (except data-ajax="true")
 		if (!href) return;
+		if (target.getAttribute("href").replace(/#/g, "") === "") {
+			event.preventDefault();
+			return;
+		}
 		if (/^javascript/.test(href)) {
 			if (back == false) return;
 		} else {
@@ -813,7 +820,7 @@
 		return element;
 	};
 	/**
-	 * privite method: convert query string to key-value object
+	 * private method: convert query string to key-value object
 	 **/
 	var _queryToObject = function(string) {
 		var obj = {};
@@ -832,7 +839,7 @@
 	 * auto init
 	 **/
 	window.addEventListener("DOMContentLoaded", function() {
-		if (Mobilebone.autoInit == true) {
+		if (hasInited == false) {
 			Mobilebone.init();
 		}
 	});
@@ -840,24 +847,31 @@
 	/**
 	 * page change when history change
 	 **/
-	if (supportHistory) {
-		window.addEventListener("popstate", function() {
-			var hash = location.hash.replace("#&", "").replace("#", "");
-			if (hash == "") return;
+	window.addEventListener("popstate", function() {
+		var hash = location.hash.replace("#&", "").replace("#", "");
 
-			var page_in = store[hash] || document.querySelector(location.hash), page_out = document.querySelector(".in." + Mobilebone.classPage);
+		var page_in = store[hash];
 
-			if (page_in && page_in == page_out) return;
-
-
-			// hash ↔ id													
-			if (store[hash] && Mobilebone.pushStateEnabled) {
-				Mobilebone.transition(store[hash], document.querySelector(".in." + Mobilebone.classPage), Mobilebone.isBack(page_in, page_out), {
-					history: false
-				});
+		if (!page_in) {
+			if(isSimple.test(hash) == false) {
+				return;
 			}
-		});
-	}
+			page_in =  document.querySelector("#" + hash)
+		}
+
+		var page_out = document.querySelector(".in." + Mobilebone.classPage);
+
+		if ((page_in && page_in == page_out) || Mobilebone.pushStateEnabled == false) return;
+
+
+		// hash ↔ id													
+		if (page_in) {
+			Mobilebone.transition(page_in, page_out, Mobilebone.isBack(page_in, page_out), {
+				history: false,
+				remove: false
+			});
+		}
+	});
 
 	return Mobilebone;
 });

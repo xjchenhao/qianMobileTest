@@ -10,7 +10,7 @@ fis.config.merge({
     roadmap: {
         domain :'http://qian.wdaics.com/test/wx',
         path: [{
-            reg: /.*\.(js|css|jpg|png|gif|eot|svg|ttf|woff|less)$/,
+            reg: /.*\.(html|js|css|jpg|png|gif|eot|svg|ttf|woff|less)$/,
             query: '?t=${timestamp}',
             useSprite: true,
             useHash: false
