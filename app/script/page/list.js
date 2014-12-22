@@ -9,8 +9,16 @@ define(function (require, exports, module) {
     module.exports = function () {
         require('zepto');
         //--------------------------------------------------【初始化数据】
+        var Mock=require('mock');
+        var listDate=Mock.mock('listPageDate.html',{
+            'list|10':[{
+                'title|1':'你的旅行，是什么颜色？” 晒照片，换北欧梦幻极光之旅！',
+                'hre|1':'#',
+                'time|1':'2013-11-11'
+           }]
+        });
         $.ajax({
-            url: "script/ajax/list.json",
+            url: "listPageDate.html",
             type: "post",
             dataType: "json",
             async:false,
@@ -18,7 +26,7 @@ define(function (require, exports, module) {
                 require.async('handlebars', function () {
                     var tpl = require('ajax/list.tpl');
                     var myTemplate = Handlebars.compile(tpl);
-                    document.querySelector('#pageList .am-list').innerHTML = myTemplate(data);
+                    document.querySelector('#pageList .am-list').innerHTML = myTemplate(data.list);
                 });
             }
         });
