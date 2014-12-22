@@ -2,26 +2,26 @@
  * 钱庄网
  * @name list页面
  * @description 页面js
- * @date 2014-11-18
+ * @date 2014-12-22
  * @version $V1.0$
  */
 define(function (require, exports, module) {
     module.exports = function () {
         require('zepto');
         //--------------------------------------------------【初始化数据】
-        var Mock=require('mock');
-        var listDate=Mock.mock('listPageDate.html',{
-            'list|10':[{
-                'title|1':'你的旅行，是什么颜色？” 晒照片，换北欧梦幻极光之旅！',
-                'hre|1':'#',
-                'time|1':'2013-11-11'
-           }]
+        var Mock = require('mock');
+        var listDate = Mock.mock('listPageDate.html', {
+            'list|20': [{
+                'title|1': '@title',
+                'hre|1': '#',
+                'time|1': '@date("yyyy-mm-dd")'
+            }]
         });
         $.ajax({
             url: "listPageDate.html",
             type: "post",
             dataType: "json",
-            async:false,
+            async: false,
             success: function (data) {
                 require.async('handlebars', function () {
                     var tpl = require('ajax/list.tpl');
@@ -31,13 +31,13 @@ define(function (require, exports, module) {
             }
         });
         //--------------------------------------------------【文章标题绑定弹框事件】
-        var Pop=require('module/pop');
-        var alertPop=new Pop({
-            type:'alert',
-            content:'暂未添加链接'
+        var Pop = require('module/pop');
+        var alertPop = new Pop({
+            type: 'alert',
+            content: '暂未添加链接'
         });
-        $('.am-list').each(function(){
-            $(this).on('click','.am-list-item-hd',function(){
+        $('.am-list').each(function () {
+            $(this).on('click', '.am-list-item-hd', function () {
                 alertPop.pop($(this).text());
                 alertPop.pop();
                 alertPop.pop();
@@ -72,14 +72,14 @@ define(function (require, exports, module) {
             }
             if (this.y <= -(this.scrollerHeight - this.wrapperHeight)) {
                 $.ajax({
-                    url: "script/ajax/list.json",
+                    url: "listPageDate.html",
                     type: "post",
                     dataType: "json",
                     success: function (data) {
                         require.async('handlebars', function () {
                             var tpl = require('ajax/list.tpl');
                             var myTemplate = Handlebars.compile(tpl);
-                            document.querySelector('#pageList .am-list').innerHTML += myTemplate(data);
+                            document.querySelector('#pageList .am-list').innerHTML += myTemplate(data.list);
                             myScroll.refresh();
                         });
                     }
@@ -98,8 +98,8 @@ define(function (require, exports, module) {
             myScroll.destroy();
             myScroll = null;
             alertPop.destroy();
-            alertPop=null;
-            $('.am-list').each(function(){
+            alertPop = null;
+            $('.am-list').each(function () {
                 $(this).off('click');
             });
         }
