@@ -91,7 +91,7 @@ define(function (require, exports, module) {
                 loadSpan = loadTop.getElementsByTagName('span')[0];
             loadSpan.innerHTML = '正在刷新';
             loadTop.classList.add('on');
-            myScroll.refresh();
+            try{myScroll.refresh()}catch (e){}
         }, 800);
         //--------------------------------------------------【返回内存释放接口】
         return function () {
