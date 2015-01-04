@@ -13,7 +13,7 @@ define(function (require, exports, module) {
         var listDate = Mock.mock('listPageDate.html', {
             'list|20': [{
                 'title|1': '@title',
-                'hre|1': '#',
+                'href|1': '#',
                 'time|1': '@date("yyyy-mm-dd")'
             }]
         });
