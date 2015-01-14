@@ -12,9 +12,9 @@ define(function (require, exports, module) {
         var Mock = require('mock');
         var listDate = Mock.mock('listPageDate.html', {
             'list|20': [{
-                'title|1': '@title',
-                'href|1': '#',
-                'time|1': '@date("yyyy-mm-dd")'
+                'title': '@title',
+                'href': '#',
+                'time': '@date("yyyy-mm-dd")'
             }]
         });
         $.ajax({
