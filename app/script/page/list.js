@@ -9,14 +9,7 @@ define(function (require, exports, module) {
     module.exports = function () {
         require('zepto');
         //--------------------------------------------------【初始化数据】
-        var Mock = require('mock');
-        var listDate = Mock.mock('listPageDate.html', {
-            'list|20': [{
-                'title': '@title',
-                'href': '#',
-                'time': '@date("yyyy-mm-dd")'
-            }]
-        });
+        require('module/ajaxMap');
         $.ajax({
             url: "listPageDate.html",
             type: "post",
